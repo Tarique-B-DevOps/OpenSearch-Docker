@@ -3,12 +3,12 @@ services:
     image: opensearchproject/opensearch:latest
     container_name: opensearch-node1
     environment:
-      - cluster.name=opensearch-cluster
-      - node.name=opensearch-node1
-      - discovery.seed_hosts=opensearch-node1,opensearch-node2
-      - cluster.initial_cluster_manager_nodes=opensearch-node1,opensearch-node2
-      - bootstrap.memory_lock=true
-      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
+      - cluster.name=${OPENSEARCH_CLUSTER_NAME:-opensearch-cluster}
+      - node.name=${OPENSEARCH_NODE1_NAME:-opensearch-node1}
+      - discovery.seed_hosts=${OPENSEARCH_DISCOVERY_SEED_HOSTS:-opensearch-node1,opensearch-node2}
+      - cluster.initial_cluster_manager_nodes=${OPENSEARCH_INITIAL_CLUSTER_MANAGER_NODES:-opensearch-node1,opensearch-node2}
+      - bootstrap.memory_lock=${OPENSEARCH_BOOTSTRAP_MEMORY_LOCK:-true}
+      - OPENSEARCH_JAVA_OPTS=${OPENSEARCH_JAVA_OPTS}
       - OPENSEARCH_INITIAL_ADMIN_PASSWORD=${OPENSEARCH_INITIAL_ADMIN_PASSWORD}
     ulimits:
       memlock:
@@ -29,12 +29,12 @@ services:
     image: opensearchproject/opensearch:latest
     container_name: opensearch-node2
     environment:
-      - cluster.name=opensearch-cluster
-      - node.name=opensearch-node2
-      - discovery.seed_hosts=opensearch-node1,opensearch-node2
-      - cluster.initial_cluster_manager_nodes=opensearch-node1,opensearch-node2
-      - bootstrap.memory_lock=true
-      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
+      - cluster.name=${OPENSEARCH_CLUSTER_NAME:-opensearch-cluster}
+      - node.name=${OPENSEARCH_NODE2_NAME:-opensearch-node2}
+      - discovery.seed_hosts=${OPENSEARCH_DISCOVERY_SEED_HOSTS:-opensearch-node1,opensearch-node2}
+      - cluster.initial_cluster_manager_nodes=${OPENSEARCH_INITIAL_CLUSTER_MANAGER_NODES:-opensearch-node1,opensearch-node2}
+      - bootstrap.memory_lock=${OPENSEARCH_BOOTSTRAP_MEMORY_LOCK:-true}
+      - OPENSEARCH_JAVA_OPTS=${OPENSEARCH_JAVA_OPTS}
       - OPENSEARCH_INITIAL_ADMIN_PASSWORD=${OPENSEARCH_INITIAL_ADMIN_PASSWORD}
     ulimits:
       memlock:
@@ -56,7 +56,7 @@ services:
     expose:
       - "5601"
     environment:
-      OPENSEARCH_HOSTS: '["https://opensearch-node1:9200","https://opensearch-node2:9200"]'
+      OPENSEARCH_HOSTS: ${OPENSEARCH_HOSTS}
     networks:
       - opensearch-net
 
@@ -66,3 +66,4 @@ volumes:
 
 networks:
   opensearch-net:
+    driver: bridge

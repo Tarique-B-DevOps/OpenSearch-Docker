@@ -3,10 +3,10 @@ services:
     image: opensearchproject/opensearch:latest
     container_name: opensearch-dev
     environment:
-      - cluster.name=opensearch-dev-cluster
+      - cluster.name=${OPENSEARCH_DEV_CLUSTER_NAME}
       - discovery.type=single-node
-      - bootstrap.memory_lock=true
-      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
+      - bootstrap.memory_lock=${OPENSEARCH_DEV_BOOTSTRAP_MEMORY_LOCK:-true}
+      - OPENSEARCH_JAVA_OPTS=${OPENSEARCH_DEV_JAVA_OPTS}
       - OPENSEARCH_INITIAL_ADMIN_PASSWORD=${OPENSEARCH_INITIAL_ADMIN_PASSWORD}
     ulimits:
       memlock:
@@ -31,7 +31,7 @@ services:
     expose:
       - "5601"
     environment:
-      OPENSEARCH_HOSTS: '["https://opensearch-dev:9200"]'
+      OPENSEARCH_HOSTS: ${OPENSEARCH_DEV_HOSTS:-'["https://opensearch-dev:9200"]'}
     networks:
       - opensearch-dev-net
 
@@ -40,3 +40,4 @@ volumes:
 
 networks:
   opensearch-dev-net:
+    driver: bridge
