@@ -1,4 +1,4 @@
-This repository provides Docker Compose configurations for deploying OpenSearch and OpenSearch Dashboards in containers. It supports both a **multi-node cluster** for production-like scenarios and a **single-node setup** for development or testing.
+This repository provides Docker Compose configurations for deploying OpenSearch and OpenSearch Dashboards using containerized environments. It supports both a **multi-node cluster setup** for simulating production environments and a **single-node setup** for development or testing purposes.
 
 ## Repository Contents
 

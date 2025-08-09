@@ -20,6 +20,14 @@ services:
     ports:
       - 9200:9200
       - 9600:9600
+    deploy:
+      resources:
+        limits:
+          cpus: ${OPENSEARCH_DEV_CPU_LIMIT}
+          memory: ${OPENSEARCH_DEV_MEM_LIMIT}
+        reservations:
+          cpus: ${OPENSEARCH_DEV_CPU_RESERVATION}
+          memory: ${OPENSEARCH_DEV_MEM_RESERVATION}   
     networks:
       - opensearch-dev-net
 
@@ -32,6 +40,14 @@ services:
       - "5601"
     environment:
       OPENSEARCH_HOSTS: ${OPENSEARCH_DEV_HOSTS:-'["https://opensearch-dev:9200"]'}
+    deploy:
+      resources:
+        limits:
+          cpus: ${OPENSEARCH_DASHBOARD_CPU_LIMIT}
+          memory: ${OPENSEARCH_DASHBOARD_MEM_LIMIT}
+        reservations:
+          cpus: ${OPENSEARCH_DASHBOARD_CPU_RESERVATION}
+          memory: ${OPENSEARCH_DASHBOARD_MEM_RESERVATION}
     networks:
       - opensearch-dev-net
 
