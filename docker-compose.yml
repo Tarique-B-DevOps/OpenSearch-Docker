@@ -22,6 +22,14 @@ services:
     ports:
       - 9200:9200
       - 9600:9600
+    deploy:
+      resources:
+        limits:
+          cpus: ${OPENSEARCH_PER_NODE_CPU_LIMIT}
+          memory: ${OPENSEARCH_PER_NODE_MEM_LIMIT}
+        reservations:
+          cpus: ${OPENSEARCH_PER_NODE_CPU_RESERVATION}
+          memory: ${OPENSEARCH_PER_NODE_MEM_RESERVATION}     
     networks:
       - opensearch-net
 
@@ -45,6 +53,14 @@ services:
         hard: 65536
     volumes:
       - opensearch-data2:/usr/share/opensearch/data
+    deploy:
+      resources:
+        limits:
+          cpus: ${OPENSEARCH_PER_NODE_CPU_LIMIT}
+          memory: ${OPENSEARCH_PER_NODE_MEM_LIMIT}
+        reservations:
+          cpus: ${OPENSEARCH_PER_NODE_CPU_RESERVATION}
+          memory: ${OPENSEARCH_PER_NODE_MEM_RESERVATION}      
     networks:
       - opensearch-net
 
@@ -57,6 +73,14 @@ services:
       - "5601"
     environment:
       OPENSEARCH_HOSTS: ${OPENSEARCH_HOSTS}
+    deploy:
+      resources:
+        limits:
+          cpus: ${OPENSEARCH_DASHBOARD_CPU_LIMIT}
+          memory: ${OPENSEARCH_DASHBOARD_MEM_LIMIT}
+        reservations:
+          cpus: ${OPENSEARCH_DASHBOARD_CPU_RESERVATION}
+          memory: ${OPENSEARCH_DASHBOARD_MEM_RESERVATION}  
     networks:
       - opensearch-net
 
